@@ -15,6 +15,7 @@
   - [Union](#union)
   - [Narrowing](#narrowing)
   - [Type Assertion](#type-assertion)
+  - [The `satisfies` Operator](#the-satisfies-operator)
   - [Type Predicates](#type-predicates)
   - [`any`](#any)
   - [`unknown`](#unknown)
@@ -469,6 +470,47 @@ console.log(num); // Output: 10
 ```
 
 The `<number>` syntax also performs type assertion. This was the original syntax for type assertion. But this created an ambiguity when used in JSX. Therefore it is recommended to use `as` instead.
+
+---
+
+---
+
+## The `satisfies` Operator
+
+The `satisfies` operator tells whether a given type satisfies a particular condition. Let's say, a particular code have an inferred type and we want to avoid changing that type. At the same time, we would like the code to be type checked against an existing type. The `satisfies` operator helps with this. It doesn't assert the type but it takes the existing code into account and still checks if a code satisfies a specific type.
+
+The key detail is that type annotation (`const x: Type`) forces a type, while `satisfies` validates the type without losing the specific inference.
+
+Here is an example:
+
+```ts
+type Config = {
+  endpoint: string;
+  timeout?: number;
+};
+
+/* 
+// Using Type Annotation
+const appConfigAlt: Config = {
+  endpoint: "https://api.example.com",
+  timeout: 5000,
+};
+
+// ERROR: Object is possibly 'undefined'. 
+// TS only knows it's a 'Config', and in 'Config', timeout is optional.
+console.log(appConfigAlt.timeout.toFixed());  
+*/
+
+// Using 'satisfies'
+const appConfig = {
+  endpoint: "https://api.example.com",
+  timeout: 5000,
+} satisfies Config;
+
+// Because we used 'satisfies', TS knows for SURE that 'timeout' exists here.
+// It doesn't treat it as "possibly undefined" like it would with a standard type annotation.
+console.log(appConfig.timeout.toFixed());
+```
 
 ---
 
