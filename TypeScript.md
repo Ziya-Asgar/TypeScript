@@ -3,7 +3,7 @@
 - [TypeScript](#typescript)
   - [Useful Links](#useful-links)
   - [Intro](#intro)
-  - [tcsconfig](#tcsconfig)
+  - [tsconfig](#tsconfig)
     - [Transpiling Files](#transpiling-files)
     - [Some TSConfig Options](#some-tsconfig-options)
   - [Type Annotations and Type Inference](#type-annotations-and-type-inference)
@@ -104,7 +104,7 @@ You’ll see that there are two syntaxes for building types: Interfaces and Type
 
 ---
 
-## tcsconfig
+## tsconfig
 
 The presence of a tsconfig.json file in a directory indicates that the directory is the root of a TypeScript project. The tsconfig.json file specifies the root files and the compiler options required to compile the project.
 
