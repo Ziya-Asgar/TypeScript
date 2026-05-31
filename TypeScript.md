@@ -4,6 +4,8 @@
   - [Useful Links](#useful-links)
   - [Intro](#intro)
   - [tcsconfig](#tcsconfig)
+    - [Transpiling Files](#transpiling-files)
+    - [Some TSConfig Options](#some-tsconfig-options)
   - [Type Annotations and Type Inference](#type-annotations-and-type-inference)
   - [Primitive Types](#primitive-types)
     - [`string`, `number`, and `boolean`](#string-number-and-boolean)
@@ -106,12 +108,22 @@ You’ll see that there are two syntaxes for building types: Interfaces and Type
 
 The presence of a tsconfig.json file in a directory indicates that the directory is the root of a TypeScript project. The tsconfig.json file specifies the root files and the compiler options required to compile the project.
 
+If we are starting a TSConfig from scratch, we may want to consider using `tsc --init` to bootstrap or use a TSConfig base. `tsc --init` creates a TSConfig file with some predetermined options.
+
+---
+
+### Transpiling Files
+
 A project is compiled in one of the following ways:
 
 - By invoking `tsc` with no input files, in which case the compiler searches for the tsconfig.json file starting in the current directory and continuing up the parent directory chain.
 - By invoking `tsc` with no input files and a `--project` (or just `-p`) command line option that specifies the path of a directory containing a tsconfig.json file, or a path to a valid .json file containing the configurations.
 
-If we are starting a TSConfig from scratch, we may want to consider using `tsc --init` to bootstrap or use a TSConfig base. Instead of running `tsc` every time that we'd like to transpile, we can run `tsc --watch`, which would transpile the `.ts` file every time that we save it.
+Instead of running `tsc` every time that we'd like to transpile, we can run `tsc --watch`, which would transpile the `.ts` file every time that we save it.
+
+---
+
+### Some TSConfig Options
 
 [TSConfig Reference](https://www.typescriptlang.org/tsconfig/) is helpful to understand the options available in the TSConfig file. Here are short explanations for some of the options:
 
@@ -119,10 +131,11 @@ If we are starting a TSConfig from scratch, we may want to consider using `tsc -
 - `target`. The version of JavaScript you're targeting. For example, `es2022`, `esnext`, etc.
 - `allowJs`. Allow JavaScript files to be imported inside your project, instead of just `.ts` and `.tsx` files.
 - `resolveJsonModule`. Allows importing modules with a `.json` extension, which is a common practice in node projects.
-- `moduleDetection`: This option forces TypeScript to consider all files as modules. When TypeScript doesn't see an import or export, it considers the file to be a script, not a module. Scripts are loaded into the global scope of browsers via the `<script />` tag - so any code we write here is at the same scope as globals like `window` and `document`. Sometimes this causes an error. For example, you might have instatiated variables with the same name in different files. When TypeScript considers both files as scripts and load them to the same - global - scope, you end up having an error due to trying to initate a variable that already exists. If you're in a project where every file is a module, not a script, changing `moduleDetection` to `force` might be helpful.
+- `moduleDetection`: This option forces TypeScript to consider all files as modules. When TypeScript doesn't see an `import` or `export`, it considers the file to be a script, not a module. Scripts are loaded into the global scope of browsers via the `<script />` tag - so any code we write here is at the same scope as globals like `window` and `document`. Sometimes this causes an error. For example, you might have instatiated variables with the same name in different files. When TypeScript considers both files as scripts and load them to the same - global - scope, you end up having an error due to trying to initate a variable that already exists. If you're in a project where every file is a module, not a script, changing `moduleDetection` to `force` might be helpful.
 - `strict`: Enables all strict type checking options.
 - `noUncheckedIndexedAccess`: Prevents you from accessing an array or object without first checking if it's defined.
 - `lib`: Tells TypeScript what built-in types to include. `dom` and `dom.iterable` give you types for `window`, `document` etc.
+- `rootDir` and `outDir`. By default, if we compile index.ts, TypeScript puts the resulting index.js right next to it in the same folder. As our project grows, our folder will become a mess of .ts and .js files mixed together. Setting `"outDir": "./dist"` tells TypeScript to put all the generated 'production' JavaScript into a separate folder called dist. In the same manner, to have all the .ts files together, we usually set `"rooDir": ".src/"`.
 
 ---
 
