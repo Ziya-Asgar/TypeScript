@@ -204,11 +204,13 @@ isLoggedIn = true;
 
 ### `null` and `undefined`
 
-JavaScript has two primitive values used to signal absent or uninitialized value: `null` and `undefined`. TypeScript has two corresponding types by the same names. How these types behave depends on whether we have the `strictNullChecks` option on.
+JavaScript has two primitive values used to signal absent or uninitialized value: `null` and `undefined`. TypeScript has two corresponding types by the same names. How these types behave depends on whether we have the `strictNullChecks` option on in the TSConfig file.
 
 #### `strictNullChecks` off
 
 With `strictNullChecks` off, values that might be `null` or `undefined` can still be accessed normally, and the values `null` and `undefined` can be assigned to a property of any type. This is similar to how languages without null checks (e.g. C#, Java) behave. The lack of checking for these values tends to be a major source of bugs; we always recommend people turn `strictNullChecks` on if it’s practical to do so in their codebase.
+
+Here is an illustration of why having `strictNullChecks` off might cause bugs:
 
 ```ts
 // With strictNullChecks OFF, null and undefined can be assigned to any type
@@ -232,18 +234,18 @@ console.log(optionalName.toUpperCase()); // Runtime error!
 
 #### `strictNullChecks` on
 
-With `strictNullChecks` on, when a value is `null` or `undefined`, we will need to test for those values before using methods or properties on that value. Just like checking for `undefined` before using an optional property, we can use **narrowing** to check for values that might be null:
+With `strictNullChecks` on, when a value is `null` or `undefined`, we will need to test for those values before using methods or properties on that value. Just like checking for `undefined` before using an optional property, we can use **narrowing** to check for values that might be `null`:
 
 ```ts
 // With strictNullChecks ON, you must explicitly handle null/undefined values
 
 // This will cause a compile error if strictNullChecks is ON
-let name: string = "John";
+let name: string = "some name";
 // name = null;        // Error: Type 'null' is not assignable to type 'string'
 // name = undefined;   // Error: Type 'undefined' is not assignable to type 'string'
 
 // You must use union types to allow null/undefined
-let optionalName: string | null = null;
+let optionalName: string | null = "some string";
 let optionalAge: number | undefined = undefined;
 
 // You must check before using
@@ -255,7 +257,7 @@ if (optionalName !== null) {
 console.log(optionalName?.toUpperCase()); // Safe - returns undefined if null
 
 // Type narrowing with typeof
-function processValue(value: string | null | undefined) {
+function func(value: string | null | undefined) {
   if (value === null) {
     return "Got null";
   } else if (value === undefined) {
@@ -265,6 +267,8 @@ function processValue(value: string | null | undefined) {
     return value.toUpperCase();
   }
 }
+
+console.log(func("hello"));
 ```
 
 #### Non-null Assertion Operator (Postfix `!`)
@@ -272,9 +276,9 @@ function processValue(value: string | null | undefined) {
 TypeScript also has a special syntax for removing `null` and `undefined` from a type without doing any explicit checking. Writing `!` after any expression is effectively a type assertion that the value isn’t `null` or `undefined`:
 
 ```ts
-function func(x?: number | null) {
+function func(value?: number | null) {
   // No error
-  console.log(x!.toFixed());
+  console.log(value!.toFixed());
 }
 ```
 
