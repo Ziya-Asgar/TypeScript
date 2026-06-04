@@ -2000,14 +2000,14 @@ interface User {
   email: string;
 }
 
-function updateUser(user: Partial<User>) {
+function logUser(user: Partial<User>) {
   // This function can accept any subset of User properties
   console.log(user);
 }
 
-updateUser({ name: "Charlie" }); // Works!
-updateUser({ age: 25 }); // Works!
-updateUser({}); // Works! (empty object)
+logUser({ name: "Charlie" }); // Works!
+logUser({ age: 25 }); // Works!
+logUser({}); // Works! (empty object)
 ```
 
 `Required<Type>` constructs a type consisting of all properties of `Type` set to required. The opposite of `Partial`.
@@ -2034,18 +2034,18 @@ const user2: Required<User> = {
 };
 
 // You can also create a function that requires all properties
-function createUser(user: Required<User>) {
+function logUser(user: Required<User>) {
   // This function MUST receive ALL properties
   console.log(user.name, user.age, user.email);
 }
 
-createUser({
+logUser({
   name: "Charlie",
   age: 35,
   email: "charlie@example.com",
 }); // Works!
 
-// createUser({ name: "David" }); // ERROR! Missing age and email
+// logUser({ name: "David" }); // ERROR! Missing age and email
 ```
 
 `Readonly<Type>` constructs a type with all properties of `Type` set to `readonly`, meaning the properties of the constructed type cannot be reassigned.
@@ -2112,6 +2112,9 @@ console.log(status.pending); // true
 const dynamicRecord: Record<string, string> = {};
 dynamicRecord["name"] = "John";
 dynamicRecord["city"] = "New York";
+
+console.log(dynamicRecord);
+// { "name": "John", "city": "New York" }
 ```
 
 `Pick<Type, Keys>` constructs a type by picking the set of properties `Keys` (string literal or union of string literals) from `Type`.
