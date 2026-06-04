@@ -2267,7 +2267,7 @@ type GreetParams = Parameters<typeof greet>;
 // GreetParams becomes a tuple type: [string, number, boolean]
 
 const params: GreetParams = ["Alice", 25, true];
-console.log(greet(...params)); 
+console.log(greet(...params));
 // "Hello Alice, you are 25 years old and active"
 
 // Example with an arrow function
@@ -2329,33 +2329,35 @@ We can refer to official documentation for other [utility types](https://www.typ
 
 ## DOM
 
-TypeScript is a typed superset of JavaScript, and it ships type definitions for the DOM API. These definitions are readily available in any default TypeScript project. Of the 20,000+ lines of definitions in lib.dom.d.ts, one stands out among the rest: `HTMLElement`. This type is the backbone for DOM manipulation with TypeScript. It serves as the base interface for every other element interface.
+TypeScript ships type definitions for the DOM API. These definitions are readily available in any default TypeScript project. Of the 20,000+ lines of definitions in `lib.dom.d.ts`, one stands out among the rest: `HTMLElement`. This type is the backbone for DOM manipulation with TypeScript. It serves as the base interface for every other element interface.
 
 `HTMLElement` interface extends the `Element` interface which extends the `Node` interface. This prototypal extension allows for all `HTMLElement`s to utilize a subset of standard methods.
 
 Here are some HTML elements and their types in TypeScript:
 
-| HTML Element       | TypeScript Type        |
-| ------------------ | ---------------------- |
-| `<div>` / `<span>` | `HTMLDivElement`       |
-| `<button>`         | `HTMLButtonElement`    |
-| `<a>`              | `HTMLAnchorElement`    |
-| `<ul>` / `<ol>`    | `HTMLUListElement`     |
-| `<li>`             | `HTMLLIElement`        |
-| `<img>`            | `HTMLImageElement`     |
-| `<input>`          | `HTMLInputElement`     |
-| `<textarea>`       | `HTMLTextAreaElement`  |
-| `<select>`         | `HTMLSelectElement`    |
-| `<option>`         | `HTMLOptionElement`    |
-| `<form>`           | `HTMLFormElement`      |
-| `<label>`          | `HTMLLabelElement`     |
-| `<canvas>`         | `HTMLCanvasElement`    |
-| `<video>`          | `HTMLVideoElement`     |
-| `<audio>`          | `HTMLAudioElement`     |
-| `<iframe>`         | `HTMLIFrameElement`    |
-| `<table>`          | `HTMLTableElement`     |
-| `<tr>`             | `HTMLTableRowElement`  |
-| `<td>` / `<th>`    | `HTMLTableCellElement` |
+| HTML Element    | TypeScript Type        |
+| --------------- | ---------------------- |
+| `<div>`         | `HTMLDivElement`       |
+| `<span>`        | `HTMLSpanElement`      |
+| `<button>`      | `HTMLButtonElement`    |
+| `<a>`           | `HTMLAnchorElement`    |
+| `<ul>`          | `HTMLUListElement`     |
+| `<ol>`          | `HTMLOListElement`     |
+| `<li>`          | `HTMLLIElement`        |
+| `<img>`         | `HTMLImageElement`     |
+| `<input>`       | `HTMLInputElement`     |
+| `<textarea>`    | `HTMLTextAreaElement`  |
+| `<select>`      | `HTMLSelectElement`    |
+| `<option>`      | `HTMLOptionElement`    |
+| `<form>`        | `HTMLFormElement`      |
+| `<label>`       | `HTMLLabelElement`     |
+| `<canvas>`      | `HTMLCanvasElement`    |
+| `<video>`       | `HTMLVideoElement`     |
+| `<audio>`       | `HTMLAudioElement`     |
+| `<iframe>`      | `HTMLIFrameElement`    |
+| `<table>`       | `HTMLTableElement`     |
+| `<tr>`          | `HTMLTableRowElement`  |
+| `<td>` / `<th>` | `HTMLTableCellElement` |
 
 Here is a simple example. The assertion of an element is a best practice in manipulation of DOM with TypeScript:
 
