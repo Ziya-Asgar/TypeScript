@@ -2117,7 +2117,7 @@ console.log(dynamicRecord);
 // { "name": "John", "city": "New York" }
 ```
 
-`Pick<Type, Keys>` constructs a type by picking the set of properties `Keys` (string literal or union of string literals) from `Type`.
+`Pick<Type, Keys>` constructs a type by picking the set of `Keys` (string literal or union of string literals) from `Type`.
 
 ```ts
 interface User {
@@ -2146,9 +2146,6 @@ console.log(user.email); // alice@example.com
 // You can also pick a single property
 type UserName = Pick<User, "name">;
 const userName: UserName = { name: "Bob" };
-
-// Or pick multiple properties
-type UserImportant = Pick<User, "name" | "email" | "createdAt">;
 ```
 
 `Omit<Type, Keys>` constructs a type by picking all properties from `Type` and then removing `Keys` (string literal or union of string literals). The opposite of `Pick`.
@@ -2257,7 +2254,7 @@ const user: CleanUser = {
 };
 ```
 
-`Parameters<Type>` constructs a tuple type from the types used in the parameters of a function type `Type`. For overloaded functions, this will be the parameters of the last signature.
+`Parameters<Type>` constructs a tuple type from the types used in the parameters of a function type. For overloaded functions, this will be the parameters of the last signature.
 
 ```ts
 // Define a function
@@ -2267,21 +2264,19 @@ function greet(name: string, age: number, isActive: boolean): string {
 
 // Get the parameter types from the function
 type GreetParams = Parameters<typeof greet>;
-
-// GreetParams is now: [name: string, age: number, isActive: boolean]
-// Which becomes a tuple type: [string, number, boolean]
+// GreetParams becomes a tuple type: [string, number, boolean]
 
 const params: GreetParams = ["Alice", 25, true];
-const result = greet(...params); // "Hello Alice, you are 25 years old and active"
+console.log(greet(...params)); 
+// "Hello Alice, you are 25 years old and active"
 
-// Example with arrow function
+// Example with an arrow function
 const multiply = (a: number, b: number): number => a * b;
 type MultiplyParams = Parameters<typeof multiply>;
-// MultiplyParams is: [a: number, b: number]
-// Which becomes: [number, number]
+// MultiplyParams becomes: [number, number]
 
 const multParams: MultiplyParams = [3, 4];
-const product = multiply(...multParams); // 12
+console.log(multiply(...multParams)); // 12
 ```
 
 `ConstructorParameters<Type>` constructs a tuple or array type from the types of a constructor function type. It produces a tuple type with all the parameter types (or the type `never` if `Type` is not a function).
@@ -2302,9 +2297,7 @@ class User {
 
 // Get the constructor parameter types
 type UserConstructorParams = ConstructorParameters<typeof User>;
-
-// UserConstructorParams is now: [name: string, age: number, isActive: boolean]
-// Which becomes a tuple type: [string, number, boolean]
+// UserConstructorParams becomes a tuple type: [string, number, boolean]
 
 // You can use it to create instances
 const userParams: UserConstructorParams = ["Alice", 30, true];
@@ -2313,10 +2306,10 @@ const user = new User(...userParams); // Creates new User instance
 // Example with arrow function (this won't work as expected since it's not a constructor)
 const createPerson = (name: string, age: number) => ({ name, age });
 type PersonConstructorParams = ConstructorParameters<typeof createPerson>;
-// This would be: never (since createPerson is not a constructor function)
+// Error
 ```
 
-`ReturnType<Type>` constructs a type consisting of the return type of function `Type`. For overloaded functions, this will be the return type of the last signature.
+`ReturnType<Type>` constructs a type consisting of the return type of a function. For overloaded functions, this will be the return type of the last signature.
 
 ```ts
 function calculateTotal(price: number, tax: number): number {
