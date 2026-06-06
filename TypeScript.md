@@ -2663,6 +2663,8 @@ An Accessor Decorator is declared just before an accessor declaration. It can be
 
 A Method Decorator is declared just before a method declaration.
 
+---
+
 ### Parameter Decorators
 
 A Parameter Decorator is declared just before a parameter declaration.
